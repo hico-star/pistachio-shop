@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پسته‌فروشی باغ کرمان</title>
+<meta name="description" content="پستهٔ تازهٔ کرمان، مستقیم از باغ. سفارش آنلاین، ارسال به سراسر کشور.">
+<style>
+  :root{
+    --ink:#1d2a1c; --green:#2f4a2a; --pista:#9dbb5a; --hull:#c4456a;
+    --paper:#f6f8f0; --line:#dfe6cf; --white:#fff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);line-height:1.9}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--hull);outline-offset:2px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  header{background:var(--white);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:1.2rem;color:var(--green);text-decoration:none}
+  .cart-btn{background:var(--green);color:#fff;border:0;border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer}
+  .cart-btn b{background:var(--hull);border-radius:99px;padding:0 8px;margin-right:6px}
+
+  .hero{background:var(--green);color:#fff}
+  .hero .wrap{display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:24px;padding-top:56px;padding-bottom:56px}
+  .hero h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.5;margin-bottom:12px}
+  .hero p{max-width:46ch;color:#dbe7c4;margin-bottom:24px}
+  .btn{display:inline-block;background:var(--pista);color:var(--ink);font-weight:700;border-radius:8px;padding:10px 22px;text-decoration:none;border:0;font-family:inherit;font-size:1rem;cursor:pointer}
+  .hero svg{width:100%;max-width:300px;justify-self:center}
+
+  section{padding:48px 0}
+  h2{font-size:1.5rem;margin-bottom:20px;color:var(--green)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column}
+  .card .pic{background:var(--paper);border-radius:8px;display:grid;place-items:center;height:130px;margin-bottom:12px}
+  .card .pic svg{width:80px}
+  .card h3{font-size:1.05rem}
+  .card small{color:#5b6b58;flex:1}
+  .price{font-weight:800;color:var(--hull);margin:8px 0}
+  .card .btn{width:100%;background:var(--green);color:#fff}
+
+  .why{background:var(--white);border-block:1px solid var(--line)}
+  .why ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .why li{border-right:4px solid var(--pista);padding-right:12px}
+  .why strong{display:block}
+
+  footer{background:var(--ink);color:#c9d3c2;padding:28px 0;text-align:center;font-size:.9rem}
+
+  /* سبد خرید */
+  #drawer{position:fixed;inset:0 auto 0 0;width:min(380px,100%);background:var(--white);box-shadow:4px 0 24px rgba(0,0,0,.2);
+    transform:translateX(-105%);transition:transform .25s;z-index:10;display:flex;flex-direction:column;padding:20px}
+  #drawer.open{transform:none}
+  #items{flex:1;overflow:auto;list-style:none}
+  #items li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .qty button{width:28px;height:28px;border-radius:6px;border:1px solid var(--line);background:var(--paper);cursor:pointer;font-size:1rem}
+  .qty span{display:inline-block;min-width:26px;text-align:center}
+  .empty{color:#5b6b58;padding:16px 0}
+  .total{display:flex;justify-content:space-between;font-weight:800;margin:14px 0}
+  .close{align-self:flex-start;background:none;border:0;font-size:1.6rem;cursor:pointer}
+  @media (max-width:700px){.hero .wrap{grid-template-columns:1fr}.hero svg{max-width:180px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#">باغ کرمان</a>
+    <button class="cart-btn" id="openCart">سبد خرید <b id="count">۰</b></button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <h1>پستهٔ تازهٔ کرمان، مستقیم از باغ به خانهٔ شما</h1>
+      <p>پسته، بادام‌زمینی و خشکبات کرمان بدون واسطه. بسته‌بندی بهداشتی و ارسال به سراسر کشور.</p>
+      <a class="btn" href="#products">دیدن محصولات</a>
+    </div>
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <path d="M50 6C74 10 90 34 84 62 78 86 58 96 44 92 24 86 12 64 18 40 24 20 36 8 50 6Z" fill="#c4456a"/>
+      <path d="M50 14C68 18 80 36 76 58 72 78 56 86 46 83 30 78 22 62 26 44 30 28 38 16 50 14Z" fill="#9dbb5a"/>
+      <path d="M50 14C52 38 54 60 46 83" stroke="#2f4a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<section id="products">
+  <div class="wrap">
+    <h2>محصولات</h2>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap">
+    <h2>چرا از ما بخرید؟</h2>
+    <ul>
+      <li><strong>مستقیم از باغ</strong>بدون واسطه، با قیمت منصفانه</li>
+      <li><strong>بسته‌بندی بهداشتی</strong>هر بسته با تاریخ برداشت</li>
+      <li><strong>ارسال سراسری</strong>با پست پیشتاز، ۲ تا ۵ روز کاری</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">باغ کرمان — کرمان | این سایت نمونه‌کار است و قیمت‌ها نمونه هستند.</div>
+</footer>
+
+<aside id="drawer" aria-label="سبد خرید" aria-hidden="true">
+  <button class="close" id="closeCart" aria-label="بستن">×</button>
+  <h2>سبد خرید</h2>
+  <ul id="items"></ul>
+  <div class="total"><span>جمع کل</span><span id="total">۰ تومان</span></div>
+  <button class="btn" id="order">ثبت سفارش در تلگرام</button>
+</aside>
+
+<script>
+  // ← این دو مقدار را با اطلاعات خودتان عوض کنید
+  const TELEGRAM_USERNAME = "t.me/hico_star";
+
+  const products = [
+    {id:1, name:"پستهٔ احمدآقایی", note:"۵۰۰ گرم، خندان", price:420000, color:"#9dbb5a"},
+    {id:2, name:"پستهٔ اکبری", note:"۵۰۰ گرم، درشت", price:480000, color:"#b4cc6e"},
+    {id:3, name:"پستهٔ کله‌قوچی", note:"۵۰۰ گرم، مغز سبز", price:450000, color:"#86a845"},
+    {id:4, name:"مغز پسته", note:"۲۵۰ گرم، خام", price:390000, color:"#a8c25f"},
+    {id:5, name:"پستهٔ شور", note:"۵۰۰ گرم، آب‌نمک", price:410000, color:"#c4456a"},
+    {id:6, name:"پستهٔ شکلاتی", note:"۳۰۰ گرم", price:350000, color:"#7a5230"}
+  ];
+
+  const fa = n => n.toLocaleString("fa-IR");
+  let cart = {};
+  try { cart = JSON.parse(localStorage.getItem("cart")) || {}; } catch(e) { cart = {}; }
+
+  const $ = id => document.getElementById(id);
+  const icon = c => `<svg viewBox="0 0 100 100"><path d="M50 8C72 12 88 34 82 62 76 84 58 94 44 90 26 84 14 64 20 40 26 22 36 10 50 8Z" fill="${c}"/><path d="M50 16C52 38 54 60 46 82" stroke="#fff" stroke-opacity=".6" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+
+  $("grid").innerHTML = products.map(p => `
+    <article class="card">
+      <div class="pic">${icon(p.color)}</div>
+      <h3>${p.name}</h3>
+      <small>${p.note}</small>
+      <div class="price">${fa(p.price)} تومان</div>
+      <button class="btn" data-add="${p.id}">افزودن به سبد</button>
+    </article>`).join("");
+
+  function save(){ try { localStorage.setItem("cart", JSON.stringify(cart)); } catch(e){} }
+
+  function render(){
+    const ids = Object.keys(cart);
+    let total = 0, count = 0;
+    $("items").innerHTML = ids.length ? ids.map(id => {
+      const p = products.find(x => x.id == id), q = cart[id];
+      total += p.price * q; count += q;
+      return `<li><span>${p.name}</span>
+        <span class="qty"><button data-dec="${id}" aria-label="کم کردن">−</button><span>${fa(q)}</span><button data-add="${id}" aria-label="زیاد کردن">+</button></span></li>`;
+    }).join("") : `<li class="empty">سبد خرید خالی است. از بخش محصولات چیزی اضافه کنید.</li>`;
+    $("total").textContent = fa(total) + " تومان";
+    $("count").textContent = fa(count);
+    save();
+  }
+
+  document.addEventListener("click", e => {
+    const add = e.target.dataset.add, dec = e.target.dataset.dec;
+    if (add) { cart[add] = (cart[add] || 0) + 1; render(); }
+    if (dec) { cart[dec]--; if (cart[dec] <= 0) delete cart[dec]; render(); }
+  });
+
+  const drawer = $("drawer");
+  const setDrawer = open => { drawer.classList.toggle("open", open); drawer.setAttribute("aria-hidden", !open); };
+  $("openCart").onclick = () => setDrawer(true);
+  $("closeCart").onclick = () => setDrawer(false);
+
+  $("order").onclick = () => {
+    const ids = Object.keys(cart);
+    if (!ids.length) { alert("سبد خرید خالی است."); return; }
+    let sum = 0;
+    const lines = ids.map(id => {
+      const p = products.find(x => x.id == id); sum += p.price * cart[id];
+      return `${p.name} × ${fa(cart[id])}`;
+    });
+    const text = "سلام، سفارش من:\n" + lines.join("\n") + "\nجمع: " + fa(sum) + " تومان";
+    window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  render();
+</script>
+</body>
+</html>
