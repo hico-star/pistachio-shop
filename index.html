@@ -323,11 +323,17 @@
       <ul id="items"></ul>
       <div class="total"><span>جمع کل</span><span id="total">۰ تومان</span></div>
       <button class="btn" id="order">ثبت سفارش در تلگرام</button>
+      <div id="contacts" style="margin-top:10px;display:grid;gap:8px"></div>
     </aside>
 
     <script>
       // ← این دو مقدار را با اطلاعات خودتان عوض کنید
-      const TELEGRAM_USERNAME = "hico_star";
+      const CONTACTS = [
+        { name: "بله", url: "https://ble.ir/hoco_star" },
+        { name: "ایتا", url: "https://eitaa.com/hoco_star" },
+        { name: "روبیکا", url: "https://rubika.ir/hoco_star" },
+        { name: "تلگرام (با فیلترشکن)", url: "https://t.me/hico_star" },
+      ];
 
       const products = [
         {
@@ -448,18 +454,6 @@
       $("openCart").onclick = () => setDrawer(true);
       $("closeCart").onclick = () => setDrawer(false);
 
-      // $("order").onclick = () => {
-      //   const ids = Object.keys(cart);
-      //   if (!ids.length) { alert("سبد خرید خالی است."); return; }
-      //   let sum = 0;
-      //   const lines = ids.map(id => {
-      //     const p = products.find(x => x.id == id); sum += p.price * cart[id];
-      //     return `${p.name} × ${fa(cart[id])}`;
-      //   });
-      //   const text = "سلام، سفارش من:\n" + lines.join("\n") + "\nجمع: " + fa(sum) + " تومان";
-      //   window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(text)}`, "_blank");
-      // };
-
       $("order").onclick = async () => {
         const ids = Object.keys(cart);
         if (!ids.length) {
@@ -477,8 +471,12 @@
         try {
           await navigator.clipboard.writeText(text);
         } catch (e) {}
-        alert("متن سفارش کپی شد. در تلگرام paste کنید و ارسال بزنید.");
-        location.href = `https://t.me/${TELEGRAM_USERNAME}`;
+        $("contacts").innerHTML =
+          "<p>متن سفارش کپی شد. یکی از پیام‌رسان‌ها را باز کنید و paste کنید:</p>" +
+          CONTACTS.map(
+            (c) =>
+              `<a class="btn" target="_blank" rel="noopener" href="${c.url}">${c.name}</a>`,
+          ).join("");
       };
 
       render();
