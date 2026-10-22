@@ -173,7 +173,19 @@
   $("openCart").onclick = () => setDrawer(true);
   $("closeCart").onclick = () => setDrawer(false);
 
-  $("order").onclick = () => {
+  // $("order").onclick = () => {
+  //   const ids = Object.keys(cart);
+  //   if (!ids.length) { alert("سبد خرید خالی است."); return; }
+  //   let sum = 0;
+  //   const lines = ids.map(id => {
+  //     const p = products.find(x => x.id == id); sum += p.price * cart[id];
+  //     return `${p.name} × ${fa(cart[id])}`;
+  //   });
+  //   const text = "سلام، سفارش من:\n" + lines.join("\n") + "\nجمع: " + fa(sum) + " تومان";
+  //   window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(text)}`, "_blank");
+  // };
+
+  $("order").onclick = async () => {
     const ids = Object.keys(cart);
     if (!ids.length) { alert("سبد خرید خالی است."); return; }
     let sum = 0;
@@ -182,8 +194,12 @@
       return `${p.name} × ${fa(cart[id])}`;
     });
     const text = "سلام، سفارش من:\n" + lines.join("\n") + "\nجمع: " + fa(sum) + " تومان";
-    window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(text)}`, "_blank");
+    try { await navigator.clipboard.writeText(text); } catch (e) {}
+    alert("متن سفارش کپی شد. در تلگرام paste کنید و ارسال بزنید.");
+    location.href = `https://t.me/${TELEGRAM_USERNAME}`;
   };
+
+
 
   render();
 </script>
